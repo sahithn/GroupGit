@@ -1,16 +1,14 @@
 var request = require('request');
 var cheerio = require('cheerio');
+var rp = require('request-promise');
 
 var roomNumbers = [];
 var rooms = [];
 var today = new Date();
 today = today.getDate();
 
-function getAvail(offSet) {
-  
-  console.log(today+offSet);
-  
-  request("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offSet)+ "&cap=0", function (error, response, html) {
+function getAvail() {
+  request("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +today+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
       //console.log(html);
     }
