@@ -3,13 +3,13 @@ var cheerio = require('cheerio');
 var rp = require('request-promise');
 
 var roomNumbers = [];
-var rooms = new Array(8);
+var rooms = [ [],[],[],[],[],[],[],[] ];
 var today = new Date();
 today = today.getDate();
 
 
 function getAvail(offset) {
-  console.log(today+offset);
+  //console.log(today+offset);
   rp("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offset)+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
       //console.log(html);
@@ -40,18 +40,18 @@ function getAvail(offset) {
       }
     });
     
-    for(var i=0; i < roomNumbers.length;i++){
-        var temp ="";
-        for(var k=0;k<32;k++){
-         temp+=( rooms[offset][roomNumbers[i]][k].open == 1? '☐':'✖︎');  
-        }
-        //console.log(temp + " " + roomNumbers[i]);
-    }
+    //for(var i=0; i < roomNumbers.length;i++){
+    //  var temp ="";
+    //  for(var k=0;k<32;k++){
+    //     /emp+=( rooms[offset][roomNumbers[i]][k].open == 1? '☐':'✖︎');  
+    //    }
+    //    console.log(temp + " " + roomNumbers[i]);
+    //}
     
-    if (offset<8)
-      getAvail(offset+1);
+    if (offset<7)
+      return getAvail(offset+1);
     else{
-      //printWeek(holder);
+      return printRooms();
   }
       
   });
@@ -186,16 +186,16 @@ function addTimeSlot(day, room, time, id){
     }
   }
  
-  rooms[Number(room)][time] = temp; 
+  rooms[day][Number(room)][time] = temp; 
 }
 
-function printWeek(week){
-  for(var i=0;i<week.length;i++){
+function printRooms(){
+  for(var i=0;i<rooms.length;i++){
     console.log(today+i);
     for(var j=0; j < roomNumbers.length;j++){
         var temp ="";
         for(var k=0;k<32;k++){
-         temp+=( week[i][roomNumbers[j]][k].open? '☐':'✖︎');  
+         temp+=( rooms[i][roomNumbers[j]][k].open ==1? '☐':'✖︎');  
         }
         console.log(temp + " " + roomNumbers[j]);
     }
