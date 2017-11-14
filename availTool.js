@@ -1,9 +1,9 @@
-var request = require('request');
+dfvar request = require('request');
 var cheerio = require('cheerio');
 
 var roomNumbers = [];
 var rooms = [];
-var day = 15; //change this everyday to update the rooms... later we can get a function that pulls the current date added
+var day = 19; //change this everyday to update the rooms... later we can get a function that pulls the current date added
 
 function getAvail() {
   
@@ -181,11 +181,10 @@ function addTimeSlot(room, day, time, id){
   temp.open = 1;
   
 
-  if (!roomNumbers.includes(Number(room)) ){
+  if (roomNumbers.indexOf(Number(room)) == -1 ){
     roomNumbers.push(Number(room));
     rooms[Number(room)] = new roomAvalibilityArray();
-  }
-  
+ 
   ((rooms[Number(room)])[day])[time] = temp; 
 }
 
