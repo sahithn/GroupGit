@@ -9,8 +9,8 @@ today = today.getDate();
 
 
 function getAvail(holder, offset) {
-  
-  rp("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +today+offset+ "&cap=0", function (error, response, html) {
+  console.log(today+offset);
+  rp("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offset)+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
       //console.log(html);
     }
@@ -51,7 +51,12 @@ function getAvail(holder, offset) {
     
     holder.push(rooms);
     
-    if ( o)
+    if (offset<8){
+      getAvail(holder, offset+1);
+    }else{
+      
+    }
+      
   });
 }
 
@@ -159,7 +164,7 @@ function timeToIndex(time){
   }
 }
 
-function roomAvalibilityArray(){
+function roomAvailibilityArray(){
   var temp = new Array(32);
   temp.fill( new timeSlot() );
   
@@ -179,7 +184,7 @@ function addTimeSlot(room, time, id){
 
   if (roomNumbers.indexOf(Number(room)) == -1 ){
     roomNumbers.push(Number(room));
-    rooms[Number(room)] = new roomAvalibilityArray();
+    rooms[Number(room)] = new roomAvailibilityArray();
   }
  
   rooms[Number(room)][time] = temp; 
