@@ -45,17 +45,17 @@ function getAvail(holder, offset) {
         for(var k=0;k<32;k++){
          temp+=( rooms[roomNumbers[i]][k].open? '☐':'✖︎');  
         }
-        console.log(temp + " " + roomNumbers[i]);
+        //console.log(temp + " " + roomNumbers[i]);
     }
     
     
     holder.push(rooms);
     
-    if (offset<8){
+    if (offset<8)
       getAvail(holder, offset+1);
-    }else{
-      console.log();
-    }
+    else
+      printWeek(holder);
+    
       
   });
 }
@@ -191,9 +191,15 @@ function addTimeSlot(room, time, id){
 }
 
 function printWeek(week){
-  for(var i=0;i<8;i++){
-    
-    
+  for(var i=0;i<week.length;i++){
+    console.log(today+i);
+    for(var j=0; j < roomNumbers.length;j++){
+        var temp ="";
+        for(var k=0;k<32;k++){
+         temp+=( week[i][roomNumbers[j]][k].open? '☐':'✖︎');  
+        }
+        console.log(temp + " " + roomNumbers[j]);
+    }
   }
 }
 
