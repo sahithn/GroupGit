@@ -10,6 +10,8 @@ function start() {
 
   http.createServer(onRequest).listen(process.env.PORT);
   console.log("Server has started.");
+  
+
 }
 
 exports.start = start;
