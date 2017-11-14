@@ -173,7 +173,7 @@ function timeSlot(){
   this.open = 0;
 }
 
-function addTimeSlot(room, day, time, id){
+function addTimeSlot(room, time, id){
   var temp = new timeSlot();
   temp.id = id;
   temp.open = 1;
@@ -183,7 +183,7 @@ function addTimeSlot(room, day, time, id){
     roomNumbers.push(Number(room));
     rooms[Number(room)] = new roomAvalibilityArray();
  
-  ((rooms[Number(room)])[day])[time] = temp; 
+  rooms[Number(room)][time] = temp; 
   }
 }
 
