@@ -3,12 +3,12 @@ var cheerio = require('cheerio');
 var rp = require('request-promise');
 
 var roomNumbers = [];
-var rooms = [];
+var rooms = new Array(8);
 var today = new Date();
 today = today.getDate();
 
 
-function getAvail(holder, offset) {
+function getAvail(offset) {
   console.log(today+offset);
   rp("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offset)+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
@@ -35,7 +35,7 @@ function getAvail(holder, offset) {
           time = time.substring(0, n != -1 ? n : time.length); //trim excess info from time
           //console.log("  ID: "+ id+ " Time: "+  time +" Index: " + timeToIndex(time) );
           time = timeToIndex(time);
-          addTimeSlot(room, time, id);
+          addTimeSlot(offset, room, time, id);
         });
       }
     });
@@ -43,19 +43,16 @@ function getAvail(holder, offset) {
     for(var i=0; i < roomNumbers.length;i++){
         var temp ="";
         for(var k=0;k<32;k++){
-         temp+=( rooms[roomNumbers[i]][k].open? '☐':'✖︎');  
+         temp+=( rooms[offset][roomNumbers[i]][k].open == 1? '☐':'✖︎');  
         }
         //console.log(temp + " " + roomNumbers[i]);
     }
     
-    
-    holder.push(rooms);
-    
     if (offset<8)
-      getAvail(holder, offset+1);
-    else
-      printWeek(holder);
-    
+      getAvail(offset+1);
+    else{
+      //printWeek(holder);
+  }
       
   });
 }
@@ -176,7 +173,7 @@ function timeSlot(){
   this.open = 0;
 }
 
-function addTimeSlot(room, time, id){
+function addTimeSlot(day, room, time, id){
   var temp = new timeSlot();
   temp.id = id;
   temp.open = 1;
@@ -184,7 +181,9 @@ function addTimeSlot(room, time, id){
 
   if (roomNumbers.indexOf(Number(room)) == -1 ){
     roomNumbers.push(Number(room));
-    rooms[Number(room)] = new roomAvailibilityArray();
+    for(var i=0;i<8;i++){
+    rooms[i][Number(room)] = new roomAvailibilityArray();
+    }
   }
  
   rooms[Number(room)][time] = temp; 

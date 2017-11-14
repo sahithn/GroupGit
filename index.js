@@ -3,5 +3,4 @@ var availTool = require("./availTool");
 
 server.start();
 
-var week = [];
-availTool.getAvail(week,0);
+availTool.getAvail(0);
