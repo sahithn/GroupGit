@@ -54,7 +54,7 @@ function getAvail(holder, offset) {
     if (offset<8){
       getAvail(holder, offset+1);
     }else{
-      
+      console.log();
     }
       
   });
@@ -188,6 +188,13 @@ function addTimeSlot(room, time, id){
   }
  
   rooms[Number(room)][time] = temp; 
+}
+
+function printWeek(week){
+  for(var i=0;i<8;i++){
+    
+    
+  }
 }
 
 
