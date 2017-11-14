@@ -8,7 +8,9 @@ var today = new Date();
 today = today.getDate();
 
 function getAvail() {
-  request("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +today+ "&cap=0", function (error, response, html) {
+  
+  for (var z=0; z<7;z++){
+  rp("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +today+z+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
       //console.log(html);
     }
@@ -33,13 +35,14 @@ function getAvail() {
           time = time.substring(0, n != -1 ? n : time.length); //trim excess info from time
           //console.log("  ID: "+ id+ " Time: "+  time +" Index: " + timeToIndex(time) );
           time = timeToIndex(time);
-          addTimeSlot(room, 0, time, id);
+          console.log(z);
+          addTimeSlot(room, z, time, id);
         });
       }
     });
     
     for(var i=0; i < roomNumbers.length;i++){
-      for(var j=0; j < 1;j++){
+      for(var j=0; j < 7;j++){
         var temp ="";
         for(var k=0;k<32;k++){
          temp+=( rooms[roomNumbers[i]][j][k].open? '☐':'✖︎');  
@@ -52,6 +55,7 @@ function getAvail() {
     
     
   });
+  }
 }
 
 
@@ -173,7 +177,7 @@ function timeSlot(){
   this.open = 0;
 }
 
-function addTimeSlot(room, time, id){
+function addTimeSlot(room, day, time, id){
   var temp = new timeSlot();
   temp.id = id;
   temp.open = 1;
@@ -183,7 +187,7 @@ function addTimeSlot(room, time, id){
     roomNumbers.push(Number(room));
     rooms[Number(room)] = new roomAvalibilityArray();
  
-  rooms[Number(room)][time] = temp; 
+  (rooms[Number(room)][day])[time] = temp; 
   }
 }
 
