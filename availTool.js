@@ -1,4 +1,4 @@
-dfvar request = require('request');
+var request = require('request');
 var cheerio = require('cheerio');
 
 var roomNumbers = [];
@@ -52,6 +52,7 @@ function getAvail() {
     }
     
     //console.log(roomNumbers);
+    
     return outputString;
   });
 }
@@ -186,6 +187,7 @@ function addTimeSlot(room, day, time, id){
     rooms[Number(room)] = new roomAvalibilityArray();
  
   ((rooms[Number(room)])[day])[time] = temp; 
+  }
 }
 
 
