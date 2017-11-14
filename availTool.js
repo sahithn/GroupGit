@@ -190,16 +190,20 @@ function addTimeSlot(day, room, time, id){
 }
 
 function printRooms(){
+  var output = "";
   for(var i=0;i<rooms.length;i++){
     console.log(today+i);
+    output += today+i + "\n";
     for(var j=0; j < roomNumbers.length;j++){
         var temp ="";
         for(var k=0;k<32;k++){
          temp+=( rooms[i][roomNumbers[j]][k].open ==1? '☐':'✖︎');  
         }
         console.log(temp + " " + roomNumbers[j]);
+      output += temp + " " + roomNumbers[j] + "\n";
     }
   }
+  return output;
 }
 
 
