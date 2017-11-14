@@ -39,21 +39,19 @@ function getAvail() {
       }
     });
     
-    var outputString = "";
     for(var i=0; i < roomNumbers.length;i++){
       for(var j=0; j < 1;j++){
         var temp ="";
         for(var k=0;k<32;k++){
-         temp+=( rooms[roomNumbers[i]][j][k].open? 'Y':'N');  
+         temp+=( rooms[roomNumbers[i]][j][k].open? '☐':'✖︎');  
         }
-        temp += " " + roomNumbers[i]+"\n";
-        outputString+=temp;
+        console.log(temp + " " + roomNumbers[i]);
+
       }
     }
     
-    //console.log(roomNumbers);
     
-    return outputString;
+    
   });
 }
 
