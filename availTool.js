@@ -3,13 +3,14 @@ var cheerio = require('cheerio');
 
 var roomNumbers = [];
 var rooms = [];
-var day = 19; //change this everyday to update the rooms... later we can get a function that pulls the current date added
+var today = new Date();
+today = today.getDate();
 
-function getAvail() {
+function getAvail(offSet) {
   
+  console.log(today+offSet);
   
-  
-  request("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +day+ "&cap=0", function (error, response, html) {
+  request("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offSet)+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
       //console.log(html);
     }
