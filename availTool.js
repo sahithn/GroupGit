@@ -6,6 +6,9 @@ var rooms = [];
 var day = 15; //change this everyday to update the rooms... later we can get a function that pulls the current date added
 
 function getAvail() {
+  
+  
+  
   request("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +day+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
       //console.log(html);
@@ -49,6 +52,7 @@ function getAvail() {
     }
     
     //console.log(roomNumbers);
+    return outputString;
   });
 }
 
@@ -176,6 +180,7 @@ function addTimeSlot(room, day, time, id){
   temp.id = id;
   temp.open = 1;
   
+
   if (!roomNumbers.includes(Number(room)) ){
     roomNumbers.push(Number(room));
     rooms[Number(room)] = new roomAvalibilityArray();
