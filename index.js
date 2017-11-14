@@ -2,4 +2,6 @@ var server = require("./server");
 var availTool = require("./availTool");
 
 server.start();
-availTool.getRooms();
+
+var week = [];
+availTool.getAvail(week,0);
