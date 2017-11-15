@@ -9,7 +9,6 @@
   "dependencies": {
     "cheerio": "^0.22.0",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2"
   },
   "engines": {
     "node": "8.x"

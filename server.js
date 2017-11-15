@@ -1,11 +1,9 @@
 var http = require("http");
-
+var availTool = require("./availTool");
 function start() {
   function onRequest(request, response) {
     console.log("Request received.");
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.write("Henryola");
-    response.end();
+    availTool.getAvail(0, response);
   }
   
   http.createServer(onRequest).listen(process.env.PORT);

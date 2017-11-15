@@ -1,6 +1,6 @@
 var request = require('request');
 var cheerio = require('cheerio');
-var rp = require('request-promise');
+var request = require('request');
 
 var roomNumbers = [];
 var rooms = [ [],[],[],[],[],[],[] ];
@@ -8,9 +8,9 @@ var today = new Date();
 today = today.getDate();
 
 
-function getAvail(offset) {
+function getAvail(offset, response) {
   //console.log(today+offset);
-  rp("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offset)+ "&cap=0", function (error, response, html) {
+  request("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offset)+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
       //console.log(html);
     }
@@ -42,9 +42,9 @@ function getAvail(offset) {
     });
     
     if (offset<7)
-      return getAvail(offset+1);
+      return getAvail(offset+1, response);
     else{
-      return printRooms();
+      return printRooms(response);
     }
       
   });
@@ -182,7 +182,7 @@ function addTimeSlot(day, room, time, id){
   rooms[day][Number(room)][time] = temp; 
 }
 
-function printRooms(){
+function printRooms(response){
   var output = "";
   for(var i=0;i<rooms.length;i++){
     console.log(today+i);
@@ -196,7 +196,10 @@ function printRooms(){
       output += temp + " " + roomNumbers[j] + "\n";
     }
   }
-  return output;
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.write("Henryola");
+    response.end();
+  //return output;
 }
 
 
