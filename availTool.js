@@ -3,12 +3,12 @@ var cheerio = require('cheerio');
 var rp = require('request-promise');
 
 var roomNumbers = [];
-var rooms = [ [],[],[],[],[],[],[],[] ];
+var rooms = [ [],[],[],[],[],[],[] ];
 var today = new Date();
 today = today.getDate();
 
 
-function getAvail(offset) {
+function getAvail(offset, response) {
   //console.log(today+offset);
   rp("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offset)+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
@@ -49,9 +49,9 @@ function getAvail(offset) {
     //}
     
     if (offset<7)
-      return getAvail(offset+1);
+      return getAvail(offset+1, response);
     else{
-      return printRooms();
+      return printRooms(response);
   }
       
   });
@@ -181,7 +181,7 @@ function addTimeSlot(day, room, time, id){
 
   if (roomNumbers.indexOf(Number(room)) == -1 ){
     roomNumbers.push(Number(room));
-    for(var i=0;i<8;i++){
+    for(var i=0;i<7;i++){
     rooms[i][Number(room)] = new roomAvailibilityArray();
     }
   }
@@ -189,7 +189,7 @@ function addTimeSlot(day, room, time, id){
   rooms[day][Number(room)][time] = temp; 
 }
 
-function printRooms(){
+function printRooms(response){
   var output = "";
   for(var i=0;i<rooms.length;i++){
     console.log(today+i);
@@ -203,6 +203,8 @@ function printRooms(){
       output += temp + " " + roomNumbers[j] + "\n";
     }
   }
+  response.write(output);
+  response.end()
   return output;
 }
 
