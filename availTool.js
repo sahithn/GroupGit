@@ -209,4 +209,14 @@ function printRooms(endRes){
 exports.getAvail = getAvail;
 
 
-function 
+function jsonRooms(){
+  var tempRooms = {};
+  for(var j=0; j < roomNumbers.length;j++){
+    var temp = [];
+    for(var i=0;i<rooms.length;i++){
+        temp[roomNumbers[j]]rooms[i][roomNumbers[j]]; 
+    }
+  }
+  
+  
+}
