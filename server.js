@@ -5,10 +5,7 @@ function start() {
     console.log("Request received.");
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.write("Henryola");
-    //response.end();
-    blazer();
-    
-    function blazer(){ response.end("blazer");}
+    response.end();
   }
   
   http.createServer(onRequest).listen(process.env.PORT);
