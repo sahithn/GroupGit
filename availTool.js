@@ -8,7 +8,7 @@ var today = new Date();
 today = today.getDate();
 
 
-function getAvail(offset, response) {
+function getAvail(offset) {
   //console.log(today+offset);
   rp("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offset)+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
@@ -35,24 +35,17 @@ function getAvail(offset, response) {
           time = time.substring(0, n != -1 ? n : time.length); //trim excess info from time
           //console.log("  ID: "+ id+ " Time: "+  time +" Index: " + timeToIndex(time) );
           time = timeToIndex(time);
+          
           addTimeSlot(offset, room, time, id);
         });
       }
     });
     
-    //for(var i=0; i < roomNumbers.length;i++){
-    //  var temp ="";
-    //  for(var k=0;k<32;k++){
-    //     /emp+=( rooms[offset][roomNumbers[i]][k].open == 1? '☐':'✖︎');  
-    //    }
-    //    console.log(temp + " " + roomNumbers[i]);
-    //}
-    
     if (offset<7)
-      return getAvail(offset+1, response);
+      return getAvail(offset+1);
     else{
-      return printRooms(response);
-  }
+      return printRooms();
+    }
       
   });
 }
@@ -189,7 +182,7 @@ function addTimeSlot(day, room, time, id){
   rooms[day][Number(room)][time] = temp; 
 }
 
-function printRooms(response){
+function printRooms(){
   var output = "";
   for(var i=0;i<rooms.length;i++){
     console.log(today+i);
@@ -203,8 +196,6 @@ function printRooms(response){
       output += temp + " " + roomNumbers[j] + "\n";
     }
   }
-  response.write(output);
-  response.end()
   return output;
 }
 
