@@ -190,7 +190,7 @@ function printRooms(endRes){
     for(var j=0; j < roomNumbers.length;j++){
         var temp ="";
         for(var k=0;k<32;k++){
-         temp+=( rooms[i][roomNumbers[j]][k].open ==1? '☐':'<font style="color:red;">☒</font>');  
+         temp+=( rooms[i][roomNumbers[j]][k].open ==1? '✅':'❌');  
         }
         console.log(temp + " " + roomNumbers[j]);
       output += temp + " " + roomNumbers[j] + "<br>";
