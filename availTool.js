@@ -8,7 +8,7 @@ var today = new Date();
 today = today.getDate();
 
 
-function getAvail(offset, response) {
+function getAvail(offset, endRes) {
   //console.log(today+offset);
   request("http://calendar.library.ucsc.edu/rooms_acc.php?gid=302&d=2017-11-" +(today+offset)+ "&cap=0", function (error, response, html) {
     if (!error && response.statusCode == 200) {
@@ -42,9 +42,9 @@ function getAvail(offset, response) {
     });
     
     if (offset<7)
-      return getAvail(offset+1, response);
+      return getAvail(offset+1, endRes);
     else{
-      return printRooms(response);
+      return printRooms(endRes);
     }
       
   });
@@ -182,7 +182,7 @@ function addTimeSlot(day, room, time, id){
   rooms[day][Number(room)][time] = temp; 
 }
 
-function printRooms(response){
+function printRooms(endRes){
   var output = "";
   for(var i=0;i<rooms.length;i++){
     console.log(today+i);
@@ -196,9 +196,9 @@ function printRooms(response){
       output += temp + " " + roomNumbers[j] + "\n";
     }
   }
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.write("Henryola");
-    response.end();
+    endRes.writeHead(200, {"Content-Type": "text/plain"});
+    endRes.write("Henryola\n");
+    endRes.end(output);
   //return output;
 }
 
