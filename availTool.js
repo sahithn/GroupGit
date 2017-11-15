@@ -186,18 +186,18 @@ function printRooms(endRes){
   var output = "";
   for(var i=0;i<rooms.length;i++){
     console.log(today+i);
-    output += today+i + "\n";
+    output += today+i + "<br>";
     for(var j=0; j < roomNumbers.length;j++){
         var temp ="";
         for(var k=0;k<32;k++){
-         temp+=( rooms[i][roomNumbers[j]][k].open ==1? '☐':'✖︎');  
+         temp+=( rooms[i][roomNumbers[j]][k].open ==1? '☐':'<font style="color:red;">☒</font>');  
         }
         console.log(temp + " " + roomNumbers[j]);
-      output += temp + " " + roomNumbers[j] + "\n";
+      output += temp + " " + roomNumbers[j] + "<br>";
     }
   }
-    endRes.writeHead(200, {"Content-Type": "text/plain"});
-    endRes.write("Henryola\n");
+    endRes.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
+    endRes.write("Henryola <br>");
     endRes.end(output);
   //return output;
 }
