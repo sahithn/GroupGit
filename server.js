@@ -1,5 +1,6 @@
 var http = require("http");
 var availTool = require("./availTool");
+
 function start() {
   function onRequest(request, response) {
     console.log("Request received.");
