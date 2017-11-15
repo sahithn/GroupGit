@@ -185,7 +185,6 @@ function addTimeSlot(day, room, time, id){
 function printRooms(endRes){
   var output = "";
   for(var i=0;i<rooms.length;i++){
-    console.log(today+i);
     output += today+i + "<br>";
     for(var j=0; j < roomNumbers.length;j++){
         var temp ="";
@@ -198,25 +197,26 @@ function printRooms(endRes){
   }
     endRes.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
     endRes.write("Henryola <br>");
-    endRes.end(output);
+    endRes.end(JSON.stringify( jsonifyRooms() ) );
   
-    
-    
-  return rooms;
+  return jsonifyRooms();
 }
 
 
 exports.getAvail = getAvail;
 
-
-function jsonRooms(){
+// converts the rooms array into a JSON object that has data objects where the keys are the room numbers
+// and the objects themselves are 7*32 arrays where each index has a room ID and a T/F value
+function jsonifyRooms(){
   var tempRooms = {};
+  
   for(var j=0; j < roomNumbers.length;j++){
     var temp = [];
     for(var i=0;i<rooms.length;i++){
-        temp[roomNumbers[j]]rooms[i][roomNumbers[j]]; 
+        temp.push( rooms[i][roomNumbers[j]] ); 
     }
+    tempRooms[roomNumbers[j].toString()] = temp;
   }
   
-  
+  return tempRooms;
 }
