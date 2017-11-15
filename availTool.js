@@ -197,7 +197,7 @@ function printRooms(endRes){
   }
     endRes.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
     endRes.write("Henryola <br>");
-    endRes.end(JSON.stringify( jsonifyRooms() ) );
+    endRes.end(output + "<script> console.log("+JSON.stringify( jsonifyRooms() )+");</script>" );
   
   return jsonifyRooms();
 }
