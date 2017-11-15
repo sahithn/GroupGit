@@ -41,7 +41,7 @@ function getAvail(offset, endRes) {
       }
     });
     
-    if (offset<7)
+    if (offset<6)
       return getAvail(offset+1, endRes);
     else{
       return printRooms(endRes);
@@ -172,13 +172,13 @@ function addTimeSlot(day, room, time, id){
   temp.open = 1;
   
 
-  if (roomNumbers.indexOf(Number(room)) == -1 ){
+  if (roomNumbers.indexOf(Number(room)) === -1 ){
     roomNumbers.push(Number(room));
     for(var i=0;i<7;i++){
-    rooms[i][Number(room)] = new roomAvailibilityArray();
+      rooms[i][Number(room)] = new roomAvailibilityArray();
     }
   }
- 
+   console.log(day);
   rooms[day][Number(room)][time] = temp; 
 }
 
@@ -199,8 +199,14 @@ function printRooms(endRes){
     endRes.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
     endRes.write("Henryola <br>");
     endRes.end(output);
-  //return output;
+  
+    
+    
+  return rooms;
 }
 
 
 exports.getAvail = getAvail;
+
+
+function 
